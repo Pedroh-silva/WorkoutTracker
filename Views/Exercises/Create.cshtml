@@ -1,0 +1,155 @@
+﻿@model Workout_Tracker.Models.Exercise
+@{
+	ViewData["Title"] = "Adicionar novo exercício";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#adicionar_musculo").click(function() {
+  var chkRptTag = false;
+  var chkoned = false;
+    $("#dep li").each(function () {
+        if($("#dep").length){
+                chkoned = true;
+                }
+                var current = $(this).text();
+
+                });
+                if (!chkoned) {
+  var campos_novos = "<div class='dep_fc'><div class='col-md-10' style='margin-top: 5px;'>" + "<li>" + $("#Muscles option:selected").text() + "<input type='checkbox' name='chkTags' id='chkTags' class='chkTags' checked='checked' value='" + $("#Muscles option:selected").val() + "' ><button class='btn btn1 fa fa-remove remove' type='button'></button></div><div class='col-md-2' id='dep_fc' style='margin-top: 5px;'></div></div>";
+  $("#dep").append(campos_novos);
+                }
+                else {
+                    alert("Apenas um músculo pode ser inserido -- Dica: coloque apenas o músculo principal");
+                }
+    });
+    });
+	
+
+$(document).on('click', 'button.remove', function() {
+  $(this).closest('div.dep_fc').remove();
+})
+</script>
+<style>
+    .chkTags{
+        display:none;
+    }
+.btn-efeito {
+  overflow:hidden;
+  position:relative;
+  background-color:#014d22; 
+  color:white;
+}
+.btn-efeito:hover {
+  background-color:#00b64e; 
+  color:white;
+}
+.btn-efeito span {
+  z-index: 20;
+}
+.btn-efeito:after {
+  background: #fff;
+  content: "";
+  height: 155px;
+  left: -85px;
+  opacity:.4;
+  position: absolute;
+  top: -60px;
+  -webkit-transform: rotate(30deg);
+          transform: rotate(30deg);
+  -webkit-transition: all 850ms cubic-bezier(0.19, 1, 0.22, 1);
+  transition: all 850ms cubic-bezier(0.19, 1, 0.22, 1);
+  width: 70px;
+  z-index:1;
+}
+.btn-efeito:hover:after {
+  left: 130%;
+  -webkit-transition: all 850ms cubic-bezier(0.19, 1, 0.22, 1);
+  transition: all 850ms cubic-bezier(0.19, 1, 0.22, 1);
+
+}
+.btn1 {
+  color:black;
+}
+.btn1:hover {
+
+    color:red;
+}
+.btn2{
+  background: #333;
+  color: #ccc;
+  width: 80px;
+  height: 30px;
+  border: 0;
+  font-size: 17px;
+  border-radius: 4px;
+  font-family: 'Raleway', sans-serif;
+  transition: .6s;
+  overflow: hidden;
+  line-height:normal;
+    }
+
+  .btn2:after{
+    content: '';
+    display: block;
+    background: rgba(255,255,255,0.2);
+    width: 30px;
+    height: 100%;
+    left: 30px;
+    top: 0;
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateX(-100px) skewX(-15deg);
+  }
+ .btn2:hover{
+    background: #D3D3D3;
+    cursor: pointer;
+  }
+
+    btn2:after{
+      transform: translateX(300px) skewX(-15deg);  
+      opacity: 1;
+      transition: .7s;
+    }
+</style>
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<h2>@ViewData["Title"]</h2>
+<hr />
+<a class="btn btn2" asp-action="Index">Voltar</a>
+@using(Html.BeginForm("Create","Exercises",FormMethod.Post, new {id = "theForm"})){
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="col-md-12 form-group">
+        <div class="col-md-6">
+             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+              @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+              <span asp-validation-for="Name" class="text-danger"></span>
+                
+        </div>
+ 
+  <div class="row" id="dep">
+      @Html.LabelFor(model => model.Muscles)
+    <div class="col-md-6">
+      @Html.DropDownListFor(m=>m.Muscles, new SelectList(ViewBag.muscles,"Id","Name") , new {@class= "form-control" })
+      @Html.ValidationMessageFor(x => x.Muscles)
+    </div>
+    <div class="col-md-6">
+      <button style="margin-left:-10px;" class="btn btn-primary" type="button" id="adicionar_musculo">Adicionar</button>
+    </div>
+  </div>
+</div>
+<div style="margin-top: 30px;">
+    <button type="submit" class="btn btn-efeito">Criar treino</button>
+</div>
+}
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+
+

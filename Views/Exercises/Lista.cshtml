@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Workout_Tracker.Models.Exercise>
+@{
+}
+<style>
+	.btn{
+  background: #333;
+  color: #ccc;
+  width: 80px;
+  height: 35px;
+  border: 0;
+  font-size: 18px;
+  border-radius: 4px;
+  font-family: 'Raleway', sans-serif;
+  transition: .6s;
+  overflow: hidden;
+    }
+  btn:focus{
+    outline: 0;
+  }
+  btn:before{
+    content: '';
+    display: block;
+    position: absolute;
+    background: rgba(255,255,255,0.5);
+    width: 60px;
+    height: 100%;
+    left: 0;
+    top: 0;
+    opacity: .5;
+    filter: blur(30px);
+    transform: translateX(-100px)  skewX(-15deg);
+  }
+  btn:after{
+    content: '';
+    display: block;
+    position: absolute;
+    background: rgba(255,255,255,0.2);
+    width: 30px;
+    height: 100%;
+    left: 30px;
+    top: 0;
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateX(-100px) skewX(-15deg);
+  }
+  btn:hover{
+    background: #338033;
+    cursor: pointer;
+  }
+    btn:before{
+      transform: translateX(300px)  skewX(-15deg);  
+      opacity: 0.6;
+      transition: .7s;
+    }
+    btn:after{
+      transform: translateX(300px) skewX(-15deg);  
+      opacity: 1;
+      transition: .7s;
+    }
+
+</style>
+<h1>Lista de Exercícios</h1>
+<table class="table table-hover table-bordered">
+    <caption>Lista</caption>
+        @foreach(var item in Model)
+        {
+          <tr>
+          <th>
+          @Html.DisplayFor(x => item.Name)
+           </th>
+                     <td>
+          <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
+	      </td>
+        </tr>
+ 
+         }
+</table>
+
+
+<a  class="btn btn-primary" asp-action="Index">Voltar</a>

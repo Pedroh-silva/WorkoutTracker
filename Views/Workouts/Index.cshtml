@@ -1,0 +1,220 @@
+﻿@model List<Workout_Tracker.Models.Workout>
+@{
+	ViewData["Title"] = "Histórico de Treino";
+}
+<style>
+	table{
+		border:1px hidden;
+		
+	}
+	td.borda{
+		white-space:nowrap;
+		justify-content:right;
+	}
+	th.cor{
+	
+	}
+	.flex-box{
+		display:flex;
+		align-items:center;
+		
+	}
+	.a{
+		width:100px;
+		height:100px;
+		display:inline-block;
+	}
+	.b{
+		width:100px;
+		height:100px;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+	}
+	.c{
+		width:auto;
+		height:100px;
+		display:inline-block;
+	}
+	.d{
+		width:30px;
+		height:30px;
+		margin-left:265px;
+	}
+	.e{
+		width:250px;
+		height:100px;
+		display:inline-block;
+		
+	}
+	.quebra {
+		/*background-color:green;*/
+		display:block;
+		height:30px;
+	}
+	.box{
+	 background-color: #fff;
+	 transform: scale(1);
+	 box-shadow: 0 0 10px #555;
+	 -webkit-border-radius:10px;
+	 font-weight:bold;
+	 white-space:nowrap;
+	 
+	}
+		.box2{
+	 background-color: #fff;
+	 box-shadow: 0 0 10px #555;
+	 -webkit-border-radius:10px;
+	 -webkit-border-bottom-right-radius:0px;
+	 -webkit-border-bottom-left-radius:0px;
+	 font-weight:bold;
+	 white-space:nowrap;
+	 
+	}
+	.btn-Detalhes{
+		background-color:slategray;
+		text-align:left;
+		font-size:13px;
+		width:75px;
+		color:white;
+		box-shadow: 0 5px 5px #555;
+	}
+
+	div{
+		margin-left:10px;
+	}
+	#Cadastro_cabecalho{
+		font-weight:bold;
+	}
+	.btn_statistic{
+		float:right;
+		background-color:slategray;
+		color:white;
+		box-shadow: 0 5px 10px #555;
+	}
+	#btn_incluir{
+		color:white;
+		box-shadow: 0px 5px 10px #555;
+	}
+	.btn:hover {
+  text-decoration: none;
+}
+.btn-efeito {
+  overflow:hidden;
+  position:relative;
+  background-color:#525c64; 
+  color:white;
+}
+.btn-efeito:hover {
+  background-color:#a8a8a8; 
+  color:white;
+}
+.btn-efeito span {
+  z-index: 20;
+}
+.btn-efeito:after {
+  background: #fff;
+  content: "";
+  height: 155px;
+  left: -85px;
+  opacity:.4;
+  position: absolute;
+  top: -60px;
+  -webkit-transform: rotate(30deg);
+          transform: rotate(30deg);
+  -webkit-transition: all 850ms cubic-bezier(0.19, 1, 0.22, 1);
+  transition: all 850ms cubic-bezier(0.19, 1, 0.22, 1);
+  width: 70px;
+  z-index:1;
+}
+.btn-efeito:hover:after {
+  left: 130%;
+  -webkit-transition: all 850ms cubic-bezier(0.19, 1, 0.22, 1);
+  transition: all 850ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+.btn-efeito2 {
+  overflow:hidden;
+  position:relative;
+  background-color:#014d22; 
+}
+.btn-efeito2:hover {
+  background-color:#00b64e; 
+}
+.btn-efeito2 span {
+  z-index: 20;
+}
+.btn-efeito2:after {
+  background: #fff;
+  content: "";
+  height: 155px;
+  left: -85px;
+  opacity:.4;
+  position: absolute;
+  top: -60px;
+  -webkit-transform: rotate(30deg);
+          transform: rotate(30deg);
+  -webkit-transition: all 850ms cubic-bezier(0.19, 1, 0.22, 1);
+  transition: all 850ms cubic-bezier(0.19, 1, 0.22, 1);
+  width: 70px;
+  z-index:1;
+}
+.btn-efeito2:hover:after {
+  left: 130%;
+  -webkit-transition: all 850ms cubic-bezier(0.19, 1, 0.22, 1);
+  transition: all 850ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+	caption {
+  caption-side: top;
+  text-align:center;
+  color:black;
+}
+body{
+	
+}
+
+</style>
+<body>
+<section id="Cadastro_cabecalho">
+		<h1 style="font-family:Garamond">@ViewData["Title"]</h1>
+</section>
+<div id=cadastro_conteudo>
+	<a id="btn_incluir" asp-action="Create" class="btn btn-efeito2">Incluir novo treino</a>
+	<a id="btn_statistic" class="btn btn_statistic btn-efeito " asp-action="Statistic">Ver estátisticas</a>
+</div>	
+@foreach(var item in Model)
+{
+<div class="flex-box">
+<div id="container-c" class="a"></div>
+	<div id="container-a" class="b">
+		<p class="box">&nbsp @item.DateTime.ToString("dd/MM/yyyy") &nbsp</p>
+	</div>
+<div id="container-c" class="e">
+	<img  src=~/lib/Images/line3.png>
+</div>
+	<div id="container-b" class="c">
+			<table class="table table-hover box">
+				<caption style="margin-bottom:-15px;" class="box2">@item.Name</caption>
+			<thead>
+				<tr>
+				<th class="cor"></th>
+				<th class="cor"></th>
+				<th class="cor"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="borda">@item.Exercises.Count()&nbsp<img style="margin-bottom:3px;" width=25px height=25px src=~/lib/Images/dumbell.png></td>
+					<td class="borda">@item.Duration.ToString(@"hh\:mm")&nbsp<img style="margin-bottom:3px;" width=15px height=15px src=~/lib/Images/Clock.png></td>
+					<td class="borda">
+						<a class="btn btn-Detalhes btn-efeito" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="quebra">
+	<div id="container-a" class="d"></div>
+</div>
+}
+</body>

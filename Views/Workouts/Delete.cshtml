@@ -1,0 +1,134 @@
+﻿@model Workout_Tracker.Models.Workout
+@{
+}
+<style>
+	.a{
+		display:flex;
+		flex-direction:row;
+		width:1000px;
+	}
+	.btn{
+  background: #333;
+  color: #ccc;
+
+  border: 0;
+  font-size: 18px;
+  border-radius: 4px;
+  font-family: 'Raleway', sans-serif;
+  transition: .6s;
+  overflow: hidden;
+    }
+  btn:focus{
+    outline: 0;
+  }
+  btn:before{
+    content: '';
+    display: block;
+    position: absolute;
+    background: rgba(255,255,255,0.5);
+    width: 100px;
+    height: 100%;
+    left: 0;
+    top: 0;
+    opacity: .5;
+    filter: blur(30px);
+    transform: translateX(-100px)  skewX(-15deg);
+  }
+  btn:after{
+    content: '';
+    display: block;
+    position: absolute;
+    background: rgba(255,255,255,0.2);
+    width: 30px;
+    height: 100%;
+    left: 30px;
+    top: 0;
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateX(-100px) skewX(-15deg);
+  }
+  btn:hover{
+    background: #338033;
+    cursor: pointer;
+  }
+    btn:before{
+      transform: translateX(300px)  skewX(-15deg);  
+      opacity: 0.6;
+      transition: .7s;
+    }
+    btn:after{
+      transform: translateX(300px) skewX(-15deg);  
+      opacity: 1;
+      transition: .7s;
+    }
+    .c{
+        color:#920000;
+        font-weight:bold;
+    }
+    dd{
+       font-weight:bold; 
+    }
+    li{
+        font-weight:bold;
+    }
+    p{
+        font-weight:bold;
+    }
+    .b{
+        width:300px;
+        height:auto;
+        margin-bottom:30px;
+        
+    }
+    .box{
+     background-color:white;
+     
+	 box-shadow: 0 0 3px #555;
+	 -webkit-border-radius:10px;
+	 font-weight:bold;
+	 white-space:nowrap;
+     
+    }
+</style>
+
+<h1 class="c">Realmente gostaria de remover este treino?</h1>
+<h3>Esta ação não poderá ser desfeita!</h3>
+<dl>
+	<dt class="c">
+		@Html.DisplayNameFor(model => model.Name)
+	</dt>
+	<dd>
+		@Html.DisplayFor(model=> model.Name)
+	</dd>
+	<dt class="c">
+		@Html.DisplayNameFor(model => model.DateTime)
+	</dt>
+	<dd>
+		@Html.DisplayFor(model=> model.DateTime)
+	</dd>
+	<dt class="c">
+		@Html.DisplayNameFor(model => model.Duration)
+	</dt>
+	<dd>
+		@Html.DisplayFor(model=> model.Duration)
+	</dd>
+</dl>
+<p>
+    Exercícios realizados:
+</p>
+<div class="b box">
+	<ul>
+	@foreach(var item in Model.Exercises)
+	{
+		<li>@item.Name</li>
+	}
+	</ul>
+</div>
+<div class="a">
+    <a style="margin-right:30px;" class="btn btn-primary" asp-action="Details" asp-route-id="@Model.Id"> Voltar para detalhes</a>
+	<form asp-action="Delete"> 
+	<input type="hidden" asp-for="Id" />
+	<input type="submit" value="Deletar" class="btn btn-danger" />
+</form>
+</div>
+

@@ -1,0 +1,179 @@
+﻿@model Workout_Tracker.Models.ViewModel.DetailsVm
+@{
+	ViewData["Title"] = "Exercícios";
+}
+<style>
+	.btn:hover {
+		text-decoration: none;
+	}
+
+	.btn-efeito {
+		overflow: hidden;
+		position: relative;
+		background-color: #525c64;
+		color: white;
+	}
+
+		.btn-efeito:hover {
+			background-color: #a8a8a8;
+			color: white;
+		}
+
+		.btn-efeito span {
+			z-index: 20;
+		}
+
+		.btn-efeito:after {
+			background: #fff;
+			content: "";
+			height: 155px;
+			left: -85px;
+			opacity: .4;
+			position: absolute;
+			top: -60px;
+			-webkit-transform: rotate(30deg);
+			transform: rotate(30deg);
+			-webkit-transition: all 850ms cubic-bezier(0.19, 1, 0.22, 1);
+			transition: all 850ms cubic-bezier(0.19, 1, 0.22, 1);
+			width: 70px;
+			z-index: 1;
+		}
+
+		.btn-efeito:hover:after {
+			left: 130%;
+			-webkit-transition: all 850ms cubic-bezier(0.19, 1, 0.22, 1);
+			transition: all 850ms cubic-bezier(0.19, 1, 0.22, 1);
+		}
+
+	.main {
+		width: 1200px;
+		height: 500px;
+		display: flex;
+		justify-content: center;
+		/*background-color:red;*/
+	}
+
+	.a {
+		width: 600px;
+		height: fit-content;
+		/*background-color:blue;*/
+	}
+
+	.b {
+		width: 600px;
+		height: fit-content;
+		/*background-color: green;*/
+	}
+
+	.box {
+		background-color: #fff;
+		transform: scale(1);
+		box-shadow: 0 0 10px #555;
+		-webkit-border-radius: 10px;
+		font-weight: bold;
+		white-space: nowrap;
+	}
+
+	.box-a {
+		width: fit-content;
+		height: 30px;
+		margin-top: 30px;
+	}
+
+	.box-b {
+		width: fit-content;
+		height: fit-content;
+		margin-top: 30px;
+	}
+
+	.cap {
+		font-size: 12px;
+		font-weight: normal;
+		color: dimgray;
+	}
+
+	.lineblock {
+		display: flex;
+		justify-content: center;
+	}
+
+	caption {
+		caption-side: top;
+		text-align: center;
+		color: black;
+		margin-bottom: -5px;
+		border-bottom: 2px solid;
+	}
+
+	.box2 {
+		background-color: #fff;
+		transform: scale(1);
+		box-shadow: 0 -1px 5px #555;
+		-webkit-border-radius: 10px;
+		font-weight: bold;
+		white-space: nowrap;
+		-webkit-border-bottom-right-radius: 0px;
+		-webkit-border-bottom-left-radius: 0px;
+	}
+
+</style>
+<h1 style="font-family:Garamond">@ViewData["Title"]</h1>
+<br />
+<div class="main">
+	<div class="a" id="Azul">
+		<a asp-action="Create" style="margin-right:10px; margin-bottom:20px;" class="btn btn-success ">Criar novos exercícios</a>
+		<a asp-action="Lista" style="margin-bottom:20px;" class="btn btn-primary ">Ver lista</a>
+		<div class="lineblock">
+			<div style="margin-left:-47px; margin-right:5px;" class="box box-a">
+				<p>&nbsp Total de exercícios cadastrados: @Model.Exercises.Count &nbsp</p>
+			</div>
+			<img style="margin-left:30px;" src="~/lib/Images/line3.png" />
+		</div>
+
+		<div style="margin-top:-1px;" class="box box-b">
+			<p>
+				&nbsp Ultimo(s) Exercício(s) feito(s) : &nbsp
+			</p>
+			<ul>
+				@foreach (var wkt in Model.Workouts.Take(1))
+				{
+					@foreach (var ex in wkt.Exercises)
+					{
+						<li>
+							@ex.Name
+						</li>
+					}
+				}
+
+			</ul>
+			@foreach (var wkt in Model.Workouts.Take(1))
+			{
+				<p class="cap">&nbsp Nome do último treino: @wkt.Name </p>
+			}
+
+		</div>
+	</div>
+	<div class="b" id="Verde">
+		<table style="margin-top:80px;" class="table table-hover box">
+			<caption style="margin-bottom:-10px;" class="box2"> &nbsp Exercícios por grupo muscular: &nbsp </caption>
+			<thead>
+				<tr>
+					@foreach(var muscle in Model.Muscles)
+					{
+						<th>@muscle.Name</th>
+					}
+					
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+				@foreach(var muscle in Model.Muscles)
+					{
+						<td><a class="btn btn-dark" asp-action="DetailsByMuscle" asp-route-id="@muscle.Id">Ver</a> </td>
+					}
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
